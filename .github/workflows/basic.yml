@@ -19,7 +19,8 @@ jobs:
           SA_PASSWORD: Password1!
     steps:
       - run: docker ps -a
-      - run: docker images -a
+      - run: ping mssql
+      - run: sqlcmd
       - name: Set up Bazel
         run: npm i @bazel/bazelisk
       - name: Check out repository code
