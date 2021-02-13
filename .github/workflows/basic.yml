@@ -18,8 +18,7 @@ jobs:
           ACCEPT_EULA: Y
           SA_PASSWORD: Password1!
     steps:
-      - run: docker ps -a
-      - run: ping mssql
+      - run: docker ps -a      
       - run: sqlcmd
       - name: Set up Bazel
         run: npm i @bazel/bazelisk
