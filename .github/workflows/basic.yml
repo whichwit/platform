@@ -21,7 +21,8 @@ jobs:
           - 1433:1433
     steps:
       - run: docker ps -a
-      - run: sqlcmd -S localhost -U sa -P Password1! -q "SET PARSEONLY ON; SELECT GETDATE(); SET PARSEONLY OFF" -o output.txt
+      - run: sqlcmd -S localhost -U sa -P Password1! -q "SET PARSEONLY ON; SELECT GETDATE(); SET PARSEONLY OFF"
+      # -o output.txt
       - run: cat output.txt
       - name: Set up Bazel
         run: npm i @bazel/bazelisk
