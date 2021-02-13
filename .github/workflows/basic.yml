@@ -7,13 +7,13 @@ name: Basic workflow
     branches:
       - main
 jobs:  
-  setup:
-    runs-on: ubuntu-latest
-    steps:
-      - run: npm i @bazel/bazelisk
   bazel_test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Set up Bazel
+        run: npm i @bazel/bazelisk
+      - name: Check out repository code
+        uses: actions/checkout@v2
       # - run: npm i @bazel/bazelisk
-      - run: bazelisk test //...
+      - name: Execute unit test
+        run: bazelisk test //...
