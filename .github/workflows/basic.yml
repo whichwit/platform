@@ -21,7 +21,7 @@ jobs:
           - 1433:1433
     steps:
       - run: docker ps -a
-      - run: sqlcmd -S mssql -U sa -P Password1! -Q "SET PARSEONLY ON; GO; SELECT GETDATE()"
+      - run: sqlcmd -S localhost -U SA -P Password1! -Q "SET PARSEONLY ON; SELECT GETDATE()"
       # - run: sqlcmd -S localhost -U sa -P Password1! -q "SELECT GETDATE()" -o output.txt
       - run: cat output.txt
       - name: Set up Bazel
