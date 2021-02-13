@@ -17,6 +17,7 @@ jobs:
         env:
           ACCEPT_EULA: Y
           SA_PASSWORD: Password1!
+        ports: [1433]
     steps:
       - run: docker ps -a      
       - run: sqlcmd -S localhost -U sa -P Password1! -Q "SELECT GETDATE()" -o output.txt
