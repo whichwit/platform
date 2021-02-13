@@ -6,10 +6,14 @@ name: Basic workflow
   push:
     branches:
       - main
-jobs:
-  build_and_deploy:
+jobs:  
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - run: npm i @bazel/bazelisk
+  bazel_test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: npm i @bazel/bazelisk
+      # - run: npm i @bazel/bazelisk
       - run: bazelisk test //...

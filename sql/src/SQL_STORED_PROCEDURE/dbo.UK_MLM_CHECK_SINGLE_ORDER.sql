@@ -22,7 +22,9 @@ CREATE   procedure [dbo].[UK_MLM_CHECK_SINGLE_ORDER]
   @chartguid		numeric(16,0),
   @clientvisitguid	numeric(16,0),
   @ordername		varchar(200),
-  @extraStatus		varchar(200) = 'AUA1'  --KAZ 55FP100014 - add @extraStatus, set default for backward compatibility and makes param optional
+  @extraStatus		varchar(200) = 'AUA1
+  go
+  '  --KAZ 55FP100014 - add @extraStatus, set default for backward compatibility and makes param optional
 )
 as
 begin

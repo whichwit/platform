@@ -12,9 +12,11 @@ filegroup(
 create_or_alter_test(
     name = "create_or_alter_keyword",
     srcs = glob(["src/**/*.sql"]),
+    timeout = "short",
 )
 
 ends_with_go_test(
     name = "ends_with_go_keyword",
     srcs = [":sqlscripts"],
+    timeout = "short",
 )

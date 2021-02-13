@@ -7,7 +7,7 @@ def _check_file(f):
     # knows what happened if the test fails.
     return """
 echo Testing that {file} starts with correct keyword...
-grep --ignore-case --extended-regexp 'GO$' {path} && err=1
+grep --ignore-case --extended-regexp --null-data ' GO$' {path} && err=1
 """.format(path = f.path, file = f.short_path)
 
 def _impl(ctx):
