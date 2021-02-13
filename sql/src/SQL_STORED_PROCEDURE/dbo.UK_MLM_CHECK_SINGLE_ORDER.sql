@@ -40,5 +40,4 @@ FROM CV3Order o (nolock)
  and charindex(','+o.OrderStatusCode+',',','+@extraStatus+',')>0  --KAZ 55FP100014 - change to @extraStatus
  and ocmi.Name = @ordername;
 
-end 
-go
+end
