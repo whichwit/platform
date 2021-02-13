@@ -18,6 +18,9 @@ jobs:
           ACCEPT_EULA: Y
           SA_PASSWORD: Password1!
     steps:
+      - name: Container validation
+        run: docker ps -a
+        run: docker images -a
       - name: Set up Bazel
         run: npm i @bazel/bazelisk
       - name: Check out repository code
