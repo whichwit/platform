@@ -9,6 +9,14 @@ name: Basic workflow
 jobs:  
   bazel_test:
     runs-on: ubuntu-latest
+    services:
+      # Label used to access the service container
+      mssql:
+        # Docker Hub image
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        env:
+          ACCEPT_EULA: Y
+          SA_PASSWORD: Password1!
     steps:
       - name: Set up Bazel
         run: npm i @bazel/bazelisk
