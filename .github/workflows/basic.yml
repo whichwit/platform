@@ -14,9 +14,10 @@ jobs:
       mssql:
         # Docker Hub image
         image: mcr.microsoft.com/mssql/server
-        env:
-          ACCEPT_EULA: Y
-          SA_PASSWORD: Password1!
+        # env:
+          # ACCEPT_EULA: Y
+          # SA_PASSWORD: Password1!
+        options: -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Password1!'
         ports:
           - 1433:1433
     steps:
