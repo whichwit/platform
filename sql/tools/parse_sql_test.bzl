@@ -15,6 +15,7 @@ sqlcmd -S localhost -U sa -P Password1! -i {path}_parse
 
 def _impl(ctx):
     script = "\n".join(
+        ['echo $TEST_TMPDIR'] +
         [_check_file(f) for f in ctx.files.srcs]
     )
 
