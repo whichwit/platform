@@ -9,8 +9,8 @@ name: Basic workflow
 jobs:
   bazel_test:
     runs-on: ubuntu-latest
-    container:
-      image:  ubuntu:latest
+    # container:
+    #   image:  ubuntu:latest
     # services:
     #   # Label used to access the service container
     #   mssql:
