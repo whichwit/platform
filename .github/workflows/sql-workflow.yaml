@@ -7,7 +7,7 @@ name: Basic workflow
     branches:
       - main
 jobs:
-  sql:
+  sql_testing:
     runs-on: ubuntu-latest
     # container:
     #   image:  ubuntu:latest
@@ -43,6 +43,6 @@ jobs:
       # - name: Set up Bazel
         # run: npm i @bazel/bazelisk
       - run: npm i @bazel/bazelisk
-      - run: sqlcmd -S localhost -U sa -P Password1! -Q "SELECT DB_NAME()"
+      # - run: sqlcmd -S localhost -U sa -P Password1! -Q "SELECT DB_NAME()"
       - name: Execute unit test
         run: bazelisk test //...
