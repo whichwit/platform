@@ -21,6 +21,7 @@ jobs:
     #       - 1433:1433
     steps:
       - run: pwd
+      - run: ls
       - run: docker-compose up -d
       - run: sqlcmd -S localhost -U sa -P "Password1!" -Q "SET PARSEONLY ON; SELECT GETDATE()"
       # - run: sqlcmd -S localhost -U sa -P Password1! -q "SELECT GETDATE()" -o output.txt
