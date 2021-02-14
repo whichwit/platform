@@ -7,10 +7,10 @@ def _check_file(f):
     # knows what happened if the test fails.
     return """
 echo Testing that {file} contains valid T-SQL scripts...
-echo "SET PARSEONLY ON;" > $TEST_TMPDIR/{file}
-cat {path} >> $TEST_TMPDIR/{file}
-sqlcmd -S localhost -U sa -P Password1! -i $TEST_TMPDIR/{file}
-""".format(path = f.path, file = f.short_path)
+echo "SET PARSEONLY ON;" > $TEST_TMPDIR/{name}
+cat {path} >> $TEST_TMPDIR/{name}
+sqlcmd -S localhost -U sa -P Password1! -i $TEST_TMPDIR/{name}
+""".format(path = f.path, file = f.short_path, name = f.basename)
 
 def _impl(ctx):
     script = "\n".join(

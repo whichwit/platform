@@ -11,18 +11,18 @@ filegroup(
 # Run 'bazel test :80columns' to check that all files in the directory
 # have at most 80 columns.
 create_or_alter_test(
-    name = "create_or_alter_keyword",
+    name = "create_or_alter_keyword_test",
     srcs = glob(["src/**/*.sql"]),
     timeout = "short",
 )
 
 ends_with_go_test(
-    name = "ends_with_go_keyword",
+    name = "ends_with_go_keyword_test",
     srcs = [":sqlscripts"],
     timeout = "short",
 )
 
 parse_test(
-    name = "parse_sql",
+    name = "parse_test",
     srcs = [":sqlscripts"],
 )
