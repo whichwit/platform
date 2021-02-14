@@ -33,7 +33,7 @@ jobs:
           time: '30s'
       # - run: docker ps -a
       # - run: sqlcmd -S mssql -U sa -P Password1! -Q "SET PARSEONLY ON; SELECT GETDATE()"
-      - run: sqlcmd -S mssql -U sa -P Password1! -Q "SELECT DB_NAME()"
+      - run: sqlcmd -S localhost -U sa -P Password1! -Q "SELECT DB_NAME()"
       # - run: cat output.txt
       # - name: Set up Bazel
         # run: npm i @bazel/bazelisk
