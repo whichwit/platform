@@ -46,3 +46,9 @@ jobs:
       # - run: sqlcmd -S localhost -U sa -P Password1! -Q "SELECT DB_NAME()"
       - name: Execute unit test
         run: bazelisk test //...
+  sql_deploy:
+    needs: sql_test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
