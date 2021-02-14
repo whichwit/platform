@@ -23,10 +23,10 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
       - run: sqlcmd -?
-      # - run: docker-compose up -d
+      - run: docker-compose up -d
       # - run: docker ps -a
       # - run: sqlcmd -S mssql -U sa -P Password1! -Q "SET PARSEONLY ON; SELECT GETDATE()"
-      # - run: sqlcmd -S localhost -U sa -P Password1! -q "SELECT GETDATE()" -o output.txt
+      - run: sqlcmd -S localhost -U sa -P Password1! -q "SELECT GETDATE()"
       # - run: cat output.txt
       - name: Set up Bazel
         run: npm i @bazel/bazelisk
