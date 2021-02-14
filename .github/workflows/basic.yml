@@ -33,16 +33,16 @@ jobs:
       #   uses: jakejarvis/wait-action@master
       #   with:
       #     time: '30s'
-      - name: wait for SQL Server
-        uses: iFaxity/wait-on-action@v1
-        with:
-          resource: tcp:1433
+      # - name: wait for SQL Server
+      #   uses: iFaxity/wait-on-action@v1
+      #   with:
+      #     resource: tcp:1433
       # - run: docker ps -a
       # - run: sqlcmd -S mssql -U sa -P Password1! -Q "SET PARSEONLY ON; SELECT GETDATE()"
-      - run: sqlcmd -S localhost -U sa -P Password1! -Q "SELECT DB_NAME()"
       # - run: cat output.txt
       # - name: Set up Bazel
         # run: npm i @bazel/bazelisk
-      # - run: npm i @bazel/bazelisk
-      # - name: Execute unit test
-        # run: bazelisk test //...
+      - run: npm i @bazel/bazelisk
+      - run: sqlcmd -S localhost -U sa -P Password1! -Q "SELECT DB_NAME()"
+      - name: Execute unit test
+        run: bazelisk test //...
