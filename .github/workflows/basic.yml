@@ -22,12 +22,12 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
-      - run: ls
-      - run: docker-compose up -d
-      - run: docker ps -a
-      - run: sqlcmd -S mssql -U sa -P Password1! -Q "SET PARSEONLY ON; SELECT GETDATE()"
+      - run: sqlcmd -?
+      # - run: docker-compose up -d
+      # - run: docker ps -a
+      # - run: sqlcmd -S mssql -U sa -P Password1! -Q "SET PARSEONLY ON; SELECT GETDATE()"
       # - run: sqlcmd -S localhost -U sa -P Password1! -q "SELECT GETDATE()" -o output.txt
-      - run: cat output.txt
+      # - run: cat output.txt
       - name: Set up Bazel
         run: npm i @bazel/bazelisk
       # - run: npm i @bazel/bazelisk
