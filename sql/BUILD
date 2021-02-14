@@ -1,5 +1,6 @@
 load("tools/create_or_alter_test.bzl", "create_or_alter_test")
 load("tools/ends_with_go_test.bzl", "ends_with_go_test")
+load("tools/parse_sql_test.bzl", "parse_sql_test")
 
 
 filegroup(
@@ -19,4 +20,9 @@ ends_with_go_test(
     name = "ends_with_go_keyword",
     srcs = [":sqlscripts"],
     timeout = "short",
+)
+
+parse_sql_test(
+    name = "parse_sql",
+    srcs = [":sqlscripts"],
 )
