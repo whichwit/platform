@@ -1,3 +1,4 @@
+CREATE OR ALTER procedure [dbo].[UK_MLM_CHECK_SINGLE_ORDER]
 --===================================================================
 -- Stored procedure:  UK_MLM_CHECK_SINGLE_ORDER
 -- Function: check to see if patient already has existing order
@@ -12,11 +13,11 @@
 ---------------------------------------------------------------------------------------------------------------------------------------
 -- History:
 -- Date       	Author    		Description
--- 12/15/2011 	k. guy			new stored procedure for mlm =  UKCMC_CORE_MEASURE_ORDS 
+-- 12/15/2011 	k. guy			new stored procedure for mlm =  UKCMC_CORE_MEASURE_ORDS
 -- 05/02/2013	Keith Zomchek	55FP100014 - add @extraStatus to allow more status checks (ie PEND)
 -- 07/21/2014	Keith Zomchek	610009 - also return order ID (IDCode)
 --===================================================================
-CREATE   procedure [dbo].[UK_MLM_CHECK_SINGLE_ORDER]
+
 (
   @clientguid		numeric(16,0),
   @chartguid		numeric(16,0),
@@ -30,15 +31,15 @@ as
 begin
 
 select top 1 o.GUID,o.IDCode  --KAZ 610009 - add o.IDCode
-FROM CV3Order o (nolock) 
- inner join CV3OrderCatalogMasterItem ocmi (nolock) 
- on o.OrderCatalogMasterItemGUID = ocmi.GUID 
+FROM CV3Order o (nolock)
+ inner join CV3OrderCatalogMasterItem ocmi (nolock)
+ on o.OrderCatalogMasterItemGUID = ocmi.GUID
  inner join CV3OrderStatus os (nolock)
- on o.OrderStatusCode = os.Code 
+ on o.OrderStatusCode = os.Code
  where o.ClientGUID = @clientguid
  and o.ClientVisitGUID = @clientvisitguid
  and o.ChartGUID = @chartguid
- and o.Active = 1  
+ and o.Active = 1
  and charindex(','+o.OrderStatusCode+',',','+@extraStatus+',')>0  --KAZ 55FP100014 - change to @extraStatus
  and ocmi.Name = @ordername;
 
