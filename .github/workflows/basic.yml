@@ -29,10 +29,14 @@ jobs:
       # - run: echo ${{ job.services.mssql.network }}
       # - run: sqlcmd -?
       # - run: docker-compose up -d
-      - name: Sleep for 30 seconds
-        uses: jakejarvis/wait-action@master
+      # - name: Sleep for 30 seconds
+      #   uses: jakejarvis/wait-action@master
+      #   with:
+      #     time: '30s'
+      - name: wait for SQL Server
+        uses: ifaxity/wait-on-action
         with:
-          time: '30s'
+          resource: localhost:1433
       # - run: docker ps -a
       # - run: sqlcmd -S mssql -U sa -P Password1! -Q "SET PARSEONLY ON; SELECT GETDATE()"
       - run: sqlcmd -S localhost -U sa -P Password1! -Q "SELECT DB_NAME()"
