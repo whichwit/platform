@@ -47,7 +47,7 @@ jobs:
       - name: Execute unit test
         run: bazelisk test //...
   sql_deploy:
-    needs: sql_test
+    needs: sql_testing
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
