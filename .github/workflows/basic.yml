@@ -34,7 +34,7 @@ jobs:
       #   with:
       #     time: '30s'
       - name: wait for SQL Server
-        uses: ifaxity/wait-on-action
+        uses: iFaxity/wait-on-action@v1
         with:
           resource: localhost:1433
       # - run: docker ps -a
