@@ -11,25 +11,29 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image:  ubuntu:latest
-    services:
-      # Label used to access the service container
-      mssql:
-        # Docker Hub image
-        image: mcr.microsoft.com/mssql/server
-        env:
-          ACCEPT_EULA: Y
-          SA_PASSWORD: Password1!
-        # options: -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Password1!'
-        # ports:
-          # - 1433:1433
+    # services:
+    #   # Label used to access the service container
+    #   mssql:
+    #     # Docker Hub image
+    #     image: mcr.microsoft.com/mssql/server
+    #     env:
+    #       ACCEPT_EULA: Y
+    #       SA_PASSWORD: Password1!
+    #     # options: -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Password1!'
+    #     # ports:
+    #       # - 1433:1433
     steps:
-      # - name: Check out repository code
-        # uses: actions/checkout@v2
+      - name: Check out repository code
+        uses: actions/checkout@v2
       # - run: sqlcmd -?
-      # - run: docker-compose up -d
+      - run: docker-compose up -d
+      - name: Sleep for 30 seconds
+        uses: jakejarvis/wait-action@master
+        with:
+          time: '30s'
       # - run: docker ps -a
       # - run: sqlcmd -S mssql -U sa -P Password1! -Q "SET PARSEONLY ON; SELECT GETDATE()"
-      - run: sqlcmd -S mssql:1433 -U sa -P Password1! -d master -Q "SELECT DB_NAME()"
+      - run: sqlcmd -S mssql -U sa -P Password1! -Q "SELECT DB_NAME()"
       # - run: cat output.txt
       # - name: Set up Bazel
         # run: npm i @bazel/bazelisk
