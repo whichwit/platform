@@ -7,10 +7,9 @@ def _check_file(f):
     # knows what happened if the test fails.
     return """
 echo Testing that {file} contains valid T-SQL scripts...
-echo "SET PARSEONLY ON;" > {path}_parse
-cat {path} >> {path}_parse
-cat {path}_parse
-sqlcmd -S localhost -U sa -P Password1! -i {path}_parse
+echo "SET PARSEONLY ON;" > $TEST_TMPDIR/{file}
+cat {path} >> $TEST_TMPDIR/{file}
+sqlcmd -S localhost -U sa -P Password1! -i $TEST_TMPDIR/{file}
 """.format(path = f.path, file = f.short_path)
 
 def _impl(ctx):
@@ -35,7 +34,7 @@ def _impl(ctx):
     runfiles = ctx.runfiles(files = ctx.files.srcs)
     return [DefaultInfo(runfiles = runfiles)]
 
-parse_sql_test = rule(
+parse_test = rule(
     implementation = _impl,
     attrs = {
         "srcs": attr.label_list(allow_files = True),
