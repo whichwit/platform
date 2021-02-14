@@ -9,17 +9,19 @@ name: Basic workflow
 jobs:
   bazel_test:
     runs-on: ubuntu-latest
+    container:
+      image:  ubuntu:latest
     services:
       # Label used to access the service container
       mssql:
         # Docker Hub image
         image: mcr.microsoft.com/mssql/server
-        # env:
-          # ACCEPT_EULA: Y
-          # SA_PASSWORD: Password1!
-        options: -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Password1!'
-        ports:
-          - 1433:1433
+        env:
+          ACCEPT_EULA: Y
+          SA_PASSWORD: Password1!
+        # options: -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Password1!'
+        # ports:
+          # - 1433:1433
     steps:
       # - name: Check out repository code
         # uses: actions/checkout@v2
