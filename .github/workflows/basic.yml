@@ -9,21 +9,21 @@ name: Basic workflow
 jobs:
   bazel_test:
     runs-on: ubuntu-latest
-    # services:
-    #   # Label used to access the service container
-    #   mssql:
-    #     # Docker Hub image
-    #     image: mcr.microsoft.com/mssql/server:2019-latest
-    #     env:
-    #       ACCEPT_EULA: Y
-    #       MSSQL_SA_PASSWORD: Password1!
-    #     ports:
-    #       - 1433:1433
+    services:
+      # Label used to access the service container
+      mssql:
+        # Docker Hub image
+        image: mcr.microsoft.com/mssql/server
+        env:
+          ACCEPT_EULA: Y
+          SA_PASSWORD: Password1!
+        ports:
+          - 1433:1433
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
-      - run: sqlcmd -?
-      - run: docker-compose up -d
+      # - run: sqlcmd -?
+      # - run: docker-compose up -d
       # - run: docker ps -a
       # - run: sqlcmd -S mssql -U sa -P Password1! -Q "SET PARSEONLY ON; SELECT GETDATE()"
       - run: sqlcmd -S localhost -U sa -P Password1! -q "SELECT GETDATE()"
