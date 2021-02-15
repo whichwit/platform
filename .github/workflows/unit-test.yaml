@@ -38,10 +38,10 @@ jobs:
       - name: Get basel-testlogs path
         id: bazel-testlogs
         run: |
-          echo "::set-outupt name=dir::$(bazelisk info bazel-testlogs)"
+          echo "::set-output name=dir::$(bazelisk info bazel-testlogs)"
       - uses: actions/upload-artifact@v2
         with:
-          name: test-log
+          name: testlogs
           path: ${{ steps.bazel-testlogs.outputs.dir }}/**/test.log
           retention-days: 1
   
