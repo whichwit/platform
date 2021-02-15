@@ -6,6 +6,7 @@ name: Test and deploy SQL assets
   push:
     branches:
       - main
+      - test
     paths:
       - 'sql/src/*.sql'
 jobs:
