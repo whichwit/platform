@@ -40,7 +40,5 @@ FROM CV3Order o (nolock)
  and o.ClientVisitGUID = @clientvisitguid
  and o.ChartGUID = @chartguid
  and o.Active = 1
- and charindex(','+o.OrderStatusCode+',',','+@extraStatus+',')>0  --KAZ 55FP100014 - change to @extraStatus
- and ocmi.Name = @ordername;
 
 end
