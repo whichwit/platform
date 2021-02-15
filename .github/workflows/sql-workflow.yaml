@@ -51,7 +51,6 @@ jobs:
   #         path: ${{ env.ARTIFACT }}/*.sql
   #         retention-days: 1
   sql_deploy:
-    needs: sql_testing
     runs-on: [self-hosted, vm1]
     env:
       ARTIFACT: ${{ github.workspace }}/_artifact
