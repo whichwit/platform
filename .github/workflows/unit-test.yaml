@@ -4,7 +4,7 @@
 name: Unit test all modules
 on: [push, pull_request]
 jobs:
-  bazel_test_all:
+  unit_test:
     runs-on: ubuntu-latest
     env:
       ARTIFACT: ${{ github.workspace }}/_artifact
