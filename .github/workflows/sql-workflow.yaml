@@ -81,6 +81,8 @@ jobs:
       #     restore-keys: |
       #       ${{ runner.os }}-node-
       # - run: npm ci
+      - name: Contents modified 
+        run: git diff-tree --no-commit-id --name-only -r --diff-filter=d ${{ github.sha }} -- sql/src
       - name: Deploy to database (PROD)
         if: github.ref == 'refs/heads/main'
         run: |
