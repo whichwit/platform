@@ -37,7 +37,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
       - run: |
-          git diff-tree --no-commit-id --name-only -r ${{ github.sha }}
+          git diff-tree --no-commit-id --name-only -r --diff-filter=d ${{ github.sha }}
       # - run: echo ${{ job.services.mssql.id }}
       # - run: echo ${{ job.services.mssql.network }}
       # - run: sqlcmd -?
