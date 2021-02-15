@@ -6,6 +6,8 @@ name: Test and deploy SQL assets
   push:
     branches:
       - main
+    paths:
+      - 'sql/src/*.sql'
 jobs:
   sql_testing:
     runs-on: ubuntu-latest
