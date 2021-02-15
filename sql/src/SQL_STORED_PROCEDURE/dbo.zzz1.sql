@@ -1,4 +1,4 @@
-CREATE OR ALTER procedure [dbo].[UK_MLM_CHECK_SINGLE_ORDER]
+CREATE OR ALTER procedure dbo.zzz1
 --===================================================================
 -- Stored procedure:  UK_MLM_CHECK_SINGLE_ORDER
 -- Function: check to see if patient already has existing order

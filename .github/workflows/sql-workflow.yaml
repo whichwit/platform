@@ -2,15 +2,15 @@
 # https://github.com/firebase/firebase-tools
 
 name: Test and deploy SQL assets
-'on':
+"on":
   push:
     branches:
       - main
 jobs:
   sql_testing:
     runs-on: ubuntu-latest
-    # container:
-    #   image:  ubuntu:latest
+    env:
+      ARTIFACT: ${{ github.workspace }}/_artifact
     services:
       # Label used to access the service container
       mssql:
@@ -19,12 +19,13 @@ jobs:
         env:
           ACCEPT_EULA: Y
           SA_PASSWORD: Password1!
-        # options: -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Password1!'
         ports:
           - 1433:1433
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
       - name: Get npm cache directory
         id: npm-cache-dir
         run: |
@@ -36,50 +37,63 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-      - run: |
-          git diff-tree --no-commit-id --name-only -r --diff-filter=d ${{ github.sha }}
-      # - run: echo ${{ job.services.mssql.id }}
-      # - run: echo ${{ job.services.mssql.network }}
-      # - run: sqlcmd -?
-      # - run: docker-compose up -d
-      # - name: Sleep for 30 seconds
-      #   uses: jakejarvis/wait-action@master
-      #   with:
-      #     time: '30s'
-      # - name: wait for SQL Server
-      #   uses: iFaxity/wait-on-action@v1
-      #   with:
-      #     resource: tcp:1433
-      # - run: docker ps -a
-      # - run: sqlcmd -S mssql -U sa -P Password1! -Q "SET PARSEONLY ON; SELECT GETDATE()"
-      # - run: cat output.txt
-      # - name: Set up Bazel
-        # run: npm i @bazel/bazelisk
       - run: npm ci
-      # - run: sqlcmd -S localhost -U sa -P Password1! -Q "SELECT DB_NAME()"
       - name: Execute unit test
         run: bazelisk test //...
+      - run: mkdir -p ${{ env.ARTIFACT }}
+      - run: cp $(git diff-tree --no-commit-id --name-only -r --diff-filter=d ${{ github.sha }} -- sql/src) ${{ env.ARTIFACT }}
+      - uses: actions/upload-artifact@v2
+        with:
+          name: artifact-sql
+          path: ${{ env.ARTIFACT }}/*.sql
+          retention-days: 1
   sql_deploy:
     needs: sql_testing
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, vm1]
+    env:
+      ARTIFACT: ${{ github.workspace }}/_artifact
     steps:
-      - name: Check out repository code
-        uses: actions/checkout@v2
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-      - uses: actions/cache@v2
-        id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
+      # - name: Check out repository code
+      #   uses: actions/checkout@v2
+      - name: Check branches (main)
+        if: github.ref == 'refs/heads/main'
+        run: echo "Deploying to production server on branch $GITHUB_REF"
+      - name: Check branches (test)
+        if: github.ref == 'refs/heads/test'
+        run: echo "Deploying to production server on branch $GITHUB_REF"
+      - uses: actions/download-artifact@v2
         with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - run: npm ci
-  runner_test:
-    runs-on: self-hosted
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v2
-      - run: dir
+          name: artifact-sql
+          path: ${{ env.ARTIFACT }}
+      # - name: Get npm cache directory
+      #   id: npm-cache-dir
+      #   run: |
+      #     echo "::set-output name=dir::$(npm config get cache)"
+      # - uses: actions/cache@v2
+      #   id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
+      #   with:
+      #     path: ${{ steps.npm-cache-dir.outputs.dir }}
+      #     key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-node-
+      # - run: npm ci
+      - name: Deploy to database
+        if: github.ref == 'refs/heads/main'
+        run: |
+          sqlcmd -S ${{ secrets.SCMDB_SERVER_TEST }} -d ${{ secrets.SCMDB_DATABASE_TEST }} -U ${{ secrets.SCMDB_USERNAME_TEST }} -P ${{ secrets.SCMDB_PASSWORD_TEST }} -i $(ls ${{ env.ARTIFACT }})
+
+
+
+  # runner_test:
+  #   runs-on: self-hosted
+  #   needs: sql_testing
+  #   env:
+  #     ARTIFACT: ${{ github.workspace }}/_artifact
+  #   steps:
+  #     - name: Check out repository code
+  #       uses: actions/checkout@v2
+  #     - uses: actions/download-artifact@v2
+  #       with:
+  #         name: artifact-sql
+  #         path: ${{ env.ARTIFACT }}
+  #     - run: ls -r
