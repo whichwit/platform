@@ -35,9 +35,13 @@ jobs:
       - run: npm ci
       - name: Execute unit test
         run: bazelisk test //...
+      - name: Get basel-testlogs path
+        id: bazel-testlogs
+        run: |
+          echo "::set-outupt name=dir::$(bazelisk info bazel-testlogs)"
       - uses: actions/upload-artifact@v2
         with:
           name: test-log
-          path: bazel-testlogs/**/test.log
+          path: ${{ steps.bazel-testlogs.outputs.dir }}/**/test.log
           retention-days: 1
   
