@@ -8,7 +8,7 @@ name: Test and deploy SQL assets
       - main
       - test
     paths:
-      - 'sql/src/**/*.sql'
+      - 'sql/**.sql'  
 jobs:
   sql_testing:
     runs-on: ubuntu-latest
