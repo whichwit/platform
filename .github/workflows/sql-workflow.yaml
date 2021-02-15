@@ -36,6 +36,8 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
+      - run: |
+          git diff-tree --no-commit-id --name-only -r ${{ github.sha }}
       # - run: echo ${{ job.services.mssql.id }}
       # - run: echo ${{ job.services.mssql.network }}
       # - run: sqlcmd -?
