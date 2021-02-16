@@ -18,7 +18,7 @@
         "select-star": "error",
         "semicolon-termination": "off",
         "set-ansi": "off",
-        "set-nocount": "error",
+        "set-nocount": "off",
         "set-quoted-identifier": "off",
         "set-transaction-isolation-level": "off",
         "set-variable": "error",
