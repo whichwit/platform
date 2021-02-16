@@ -10,10 +10,10 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ref: main
+          # git reset --hard test
       - name: Reset promotion branch
         run: |
-          git fetch origin test:test --depth=1
-          git reset --hard test
+          git fetch origin test:test
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v3.8.2
