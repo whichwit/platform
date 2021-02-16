@@ -12,7 +12,7 @@ jobs:
           ref: main
       - name: Reset promotion branch
         run: |
-          git fetch origin test:test
+          git fetch origin test:test --depth=1
           git reset --hard test
       - name: Create Pull Request
         id: cpr
