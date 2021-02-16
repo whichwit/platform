@@ -25,7 +25,7 @@ jobs:
           branch: prod-promotion
           branch-suffix: short-commit-hash
           delete-branch: true
-          title: '[Example] Update report'
+          title: '[Example] Update report ${{ github.sha }}'
           body: |
             Update report
             - Updated with *today's* date
