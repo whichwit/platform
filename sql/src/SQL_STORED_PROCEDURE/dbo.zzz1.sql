@@ -23,8 +23,7 @@ CREATE OR ALTER procedure dbo.zzz1
   @chartguid		numeric(16,0),
   @clientvisitguid	numeric(16,0),
   @ordername		varchar(200),
-  @extraStatus		varchar(200) = 'AUA1
-  go
+  @extraStatus		varchar(200) = 'AUA1  go
   '  --KAZ 55FP100014 - add @extraStatus, set default for backward compatibility and makes param optional
 )
 as
