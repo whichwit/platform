@@ -1,0 +1,166 @@
+maintenance:
+	title:  SARS CoV2-Flu Combo Test ;;
+	mlmname:  CALLED_COVID_19_FLU_COMBO;;
+	arden: version 2.5;;
+	version:  1.0;;
+	institution:  University of Kentucky Healthcare;;
+	author:  Le Yang;;
+	specialist:  ;;
+	date:  2021-01-12;;
+	validation:  testing;;
+
+library:
+	purpose:	SARS CoV2-Flu Combo Test 
+	;;
+	explanation:	The following orders will be dropped AUTOMATICALLY when
+		entering the SARS CoV2/COVID 19 order if not already on chart:
+		- Isolation - Contact, Airborne and Eye Protection
+		- Nursing orders -  Standard COVID protocols for Nebs, BIPAP steroids and patient testing
+		- Pharmacy -  Please review steroid use with attending MD.
+
+		History
+		-------
+		2021-01-12	LY	RITM0048695
+			- Initial implementation
+	;;
+	keywords:
+	;;
+	citations:
+	;;
+knowledge:
+	type: data-driven;;
+	data:
+		func_existing_order := mlm 'CALLED_ORDER_EXISTING' ;
+		func_order_create := mlm 'CALLED_ORDER_CREATE' ;
+		include func_order_create;		
+		func_order_discontinue := mlm 'CALLED_ORDER_DISCONTINUE' ;
+
+		mlm_name := "CALLED_COVID_19_FLU_COMBO" ;
+		create_reason := mlm_name ;
+		covid_order_name := "SARS CoV2/COVID 19" ;
+		covid_flu_order_name := "SARS CoV2 COVID-19/Influenza A,B" ;
+
+		source := "Per Protocol" ;
+		session_type := "Standard" ;
+		session_reason := NULL ;
+		availability_override := "Always" ;
+		notification_override := "All" ;
+		user_data_obj_list := () as list ;
+		error_message := "" ;
+
+		//----- DESTINATIONS
+		error_destination := destination { Alert } with [
+			 alert_type := "SYSTEM ALERT",
+			 short_message := "ObjectPlus Error",
+			 priority := "low",
+			 scope := "CHART",
+			 Rule_group := "ObjectPlus",
+			 Rule_number := 1003,
+			 Display_alert := FALSE,
+			 render_as := "HTML" ];
+
+		client_guid, visit_guid := read first { StateInfo: ClientGUID, VisitGUID } ;
+
+		// retrieve existing order guids
+		covid_order_guid := read first {"
+			SELECT TOP(1)
+				o.GUID
+			FROM CV3Order o WITH(NOLOCK)
+			WHERE o.ClientGUID = " || client_guid || "
+				AND o.ClientVisitGUID = " || visit_guid || "
+				AND o.Name = " || sql( covid_order_name ) || "
+				AND o.Active = 1
+				AND o.OrderStatusLevelNum IN (40,45)
+			ORDER BY o.SignificantDtm DESC, o.Entered DESC
+		"} ;
+
+		covid_flu_order_guid := read first {"
+			SELECT TOP(1)
+				o.GUID
+			FROM CV3Order o WITH (NOLOCK)
+			WHERE o.ClientGUID = " || client_guid || "
+				AND o.ClientVisitGUID = " || visit_guid || "
+				AND o.Name = " || sql( covid_flu_order_name ) || "
+				AND o.Active = 1
+				AND o.OrderStatusLevelNum IN (40,45,50,55,60,80,83,85)
+			ORDER BY o.SignificantDtm DESC, o.Entered DESC
+		"} ;
+
+		is_gsh := read first {"			
+			SELECT CONVERT(BIT, CASE
+					WHEN EXISTS (
+						SELECT *
+						FROM CV3ClientVisit cv
+						JOIN CV3Location l ON l.GUID = cv.CurrentLocationGUID
+							AND l.Code LIKE 'UKCMC          |GS             |%'
+						WHERE cv.ClientGUID = " || client_guid || "
+							AND cv.GUID = " || visit_guid || "
+					) THEN 1
+					ELSE 0
+				END)
+		"} ;
+
+
+		// use "scmservices" as requested provider
+		care_provider_guid := read first {"	SELECT GUID	FROM CV3User WITH (NOLOCK) WHERE IDCode = 'scmservices'	"};
+	;;
+	priority: 50
+	;;
+	evoke:
+	;;
+	logic:
+		if exists covid_order_guid
+			and not exists covid_flu_order_guid
+			and is_gsh
+		then
+			conclude true ;
+		endif;
+	;;
+	action:
+		// discontinue standard COVID order
+		return_code, return_message := call func_order_discontinue with
+			( 	care_provider_guid
+				, covid_order_guid
+				, create_reason
+			);
+
+		if return_code <> 0
+		then
+			error_message := error_message || return_message ;
+		endif;
+		
+		order_obj := new OrderDefinitionObj with [
+			Name := covid_flu_order_name
+			, TypeCode := "diagnostic"
+		];
+
+		order_runtime_obj := new OrderRuntimeObj with [
+			ClientVisitGUID := visit_guid
+			, CareProviderGUID := care_provider_guid
+			, Reason := create_reason
+			, Source := source
+			, SessionType := session_type
+			, AvailabilityOverride := availability_override
+			, NotificationOverride := notification_override
+		];
+
+		return_code, return_message := call func_order_create with
+			( 	order_obj
+				, order_runtime_obj
+				, user_data_obj_list
+				, covid_order_guid
+			);
+
+		if return_code <> 0
+		then
+			error_message := error_message || return_message ;
+		endif;
+
+		if error_message <> ""
+		then
+			write "<p>An error has occured in the MLM <span style='font-weight: bold'>"|| this_mlm_name || "</span>:</p>"  at error_destination;
+			write error_message at error_destination;
+		endif;		
+	;;
+Urgency: 50;;
+end:
