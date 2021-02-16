@@ -83,15 +83,15 @@ jobs:
       # - run: npm i -g @bazel/bazelisk
       - run: npm ci
       # - run: bazelisk run //sql:deploy
-      - name: Diff tree
-        run: git diff-tree --no-commit-id --name-only -r --diff-filter=d ${{ github.sha }} -- sql/src
       - name: Deploy sql scripts to PROD region
         if: github.ref == 'refs/heads/main'
         run: |
+          git diff-tree --no-commit-id --name-only -r --diff-filter=d ${{ github.sha }} -- sql/src
           sqlcmd -S ${{ secrets.SCMDB_SERVER_TEST }} -d ${{ secrets.SCMDB_DATABASE_TEST }} -U ${{ secrets.SCMDB_USERNAME_TEST }} -P ${{ secrets.SCMDB_PASSWORD_TEST }} -i $(git diff-tree --no-commit-id --name-only -r --diff-filter=d ${{ github.sha }} -- sql/src)
       - name: Deploy sql scripts to TEST region
         if: github.ref == 'refs/heads/test'
         run: |
+          git diff-tree --no-commit-id --name-only -r --diff-filter=d ${{ github.sha }} -- sql/src
           sqlcmd -S ${{ secrets.SCMDB_SERVER_TEST }} -d ${{ secrets.SCMDB_DATABASE_TEST }} -U ${{ secrets.SCMDB_USERNAME_TEST }} -P ${{ secrets.SCMDB_PASSWORD_TEST }} -i $(git diff-tree --no-commit-id --name-only -r --diff-filter=d ${{ github.sha }} -- sql/src)
 
 
