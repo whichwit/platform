@@ -1,5 +1,5 @@
 {
-  "devDependencies": {
+  "dependencies": {
     "@bazel/bazelisk": "1.7.5"
   }
 }
