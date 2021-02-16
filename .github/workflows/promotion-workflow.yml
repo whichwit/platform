@@ -12,7 +12,7 @@ jobs:
           ref: main
       - name: Reset promotion branch
         run: |
-          git fetch origin test:test --depth=0
+          git fetch origin test:test --depth=1
           git reset --hard test
       - name: Create Pull Request
         id: cpr
@@ -25,7 +25,7 @@ jobs:
           branch: prod-promotion
           branch-suffix: short-commit-hash
           delete-branch: true
-          title: '[Example] Update report'
+          title: '[Example] Update report ${{ github.sha }}'
           body: |
             Update report
             - Updated with *today's* date
