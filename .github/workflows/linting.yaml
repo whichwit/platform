@@ -41,4 +41,4 @@ jobs:
             ${{ runner.os }}-node-
       - run: npm ci
       - run: bazelisk run //sql:deploy
-      - run:  ls
+      - uses: ./.github/actions/t
