@@ -10,13 +10,10 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ref: main
-          # git reset --hard test
       - name: Reset promotion branch
         run: |
-          git config user.email "you@example.com"
-          git config user.name "Your Name"
           git fetch origin test:test          
-          git cherry-pick --allow-empty --strategy=recursive --strategy-option=theirs test
+          git reset --soft test
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v3.8.2
