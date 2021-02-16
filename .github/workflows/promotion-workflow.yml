@@ -7,6 +7,12 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: main
+      - name: Reset promotion branch
+        run: |
+          git fetch origin test:test
+          git reset --hard test
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v3.8.2
@@ -17,7 +23,6 @@ jobs:
           signoff: true
           branch: prod-promotion
           delete-branch: true
-          base: main
           title: '[Example] Update report'
           body: |
             Update report
