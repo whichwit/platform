@@ -51,7 +51,7 @@ jobs:
   #         path: ${{ env.ARTIFACT }}/*.sql
   #         retention-days: 1
   sql_deploy:
-    runs-on: [self-hosted, vm1]
+    runs-on: [self-hosted, PRDITSATECI03]
     env:
       ARTIFACT: ${{ github.workspace }}/_artifact
     steps:
@@ -82,10 +82,14 @@ jobs:
             ${{ runner.os }}-node-
       - run: npm ci
       - run: bazelisk run //sql:deploy
-      - name: Contents modified 
+      - name: Diff tree
         run: git diff-tree --no-commit-id --name-only -r --diff-filter=d ${{ github.sha }} -- sql/src
-      - name: Deploy to database (PROD)
+      - name: Deploy sql scripts to PROD region
         if: github.ref == 'refs/heads/main'
+        run: |
+          sqlcmd -S ${{ secrets.SCMDB_SERVER_TEST }} -d ${{ secrets.SCMDB_DATABASE_TEST }} -U ${{ secrets.SCMDB_USERNAME_TEST }} -P ${{ secrets.SCMDB_PASSWORD_TEST }} -i $(git diff-tree --no-commit-id --name-only -r --diff-filter=d ${{ github.sha }} -- sql/src)
+      - name: Deploy sql scripts to TEST region
+        if: github.ref == 'refs/heads/test'
         run: |
           sqlcmd -S ${{ secrets.SCMDB_SERVER_TEST }} -d ${{ secrets.SCMDB_DATABASE_TEST }} -U ${{ secrets.SCMDB_USERNAME_TEST }} -P ${{ secrets.SCMDB_PASSWORD_TEST }} -i $(git diff-tree --no-commit-id --name-only -r --diff-filter=d ${{ github.sha }} -- sql/src)
 
