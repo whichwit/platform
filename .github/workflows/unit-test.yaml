@@ -58,7 +58,7 @@ jobs:
             ${{ runner.os }}-node-
       - run: npm ci
       - name: Linting T-SQL
-        run: npx tsqllint --config ./tsqllintrc sql/src
+        run: npx tsqllint --config .tsqllintrc sql/src
   play:
     runs-on: ubuntu-latest
     steps:
