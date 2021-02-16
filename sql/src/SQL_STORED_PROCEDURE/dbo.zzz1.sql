@@ -1,4 +1,4 @@
-CREATE OR ALTER procedure dbo.zzz1
+CREATE OR ALTER PROCEDURE dbo.zzz1
 --===================================================================
 -- Stored procedure:  UK_MLM_CHECK_SINGLE_ORDER
 -- Function: check to see if patient already has existing order
@@ -19,27 +19,27 @@ CREATE OR ALTER procedure dbo.zzz1
 --===================================================================
 
 (
-  @clientguid		numeric(16,0),
-  @chartguid		numeric(16,0),
-  @clientvisitguid	numeric(16,0),
-  @ordername		varchar(200),
-  @extraStatus		varchar(200) = 'AUA1  go
+  @clientguid		NUMERIC(16,0),
+  @chartguid		NUMERIC(16,0),
+  @clientvisitguid	NUMERIC(16,0),
+  @ordername		VARCHAR(200),
+  @extraStatus		VARCHAR(200) = 'AUA1  go
   '  --KAZ 55FP100014 - add @extraStatus, set default for backward compatibility and makes param optional
 )
-as
-begin
+AS
+BEGIN
+  SET ANSI_NULLS ON;
+  SET NOCOUNT ON;
+  SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
 
--- t
-
-select top 1 o.GUID,o.IDCode  --KAZ 610009 - add o.IDCode
-FROM CV3Order o (nolock)
- inner join CV3OrderCatalogMasterItem ocmi (nolock)
- on o.OrderCatalogMasterItemGUID = ocmi.GUID
- inner join CV3OrderStatus os (nolock)
- on o.OrderStatusCode = os.Code
- where o.ClientGUID = @clientguid
- and o.ClientVisitGUID = @clientvisitguid
- and o.ChartGUID = @chartguid
- and o.Active = 1
-
-end
+SELECT TOP 1 o.GUID,o.IDCode  --KAZ 610009 - add o.IDCode
+FROM CV3Order o
+ INNER JOIN CV3OrderCatalogMasterItem ocmi
+ ON o.OrderCatalogMasterItemGUID = ocmi.GUID
+ INNER JOIN CV3OrderStatus os
+ ON o.OrderStatusCode = os.Code
+ WHERE o.ClientGUID = @clientguid
+ AND o.ClientVisitGUID = @clientvisitguid
+ AND o.ChartGUID = @chartguid
+ AND o.Active = 1
+END

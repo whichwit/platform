@@ -1,5 +1,6 @@
 {
   "devDependencies": {
-    "@bazel/bazelisk": "1.7.5"
+    "@bazel/bazelisk": "1.7.5",
+    "tsqllint": "1.11.0"
   }
 }

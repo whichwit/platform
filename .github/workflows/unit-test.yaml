@@ -35,6 +35,8 @@ jobs:
       - run: npm ci
       - name: Execute unit test
         run: bazelisk test //... --test_env=SA_PASSWORD=${{ secrets.SA_PASSWORD }}
+      - name: Linting
+        run: npx tsqllint --config ./tsqllintrc sql/src
       - name: Get bazel-testlogs path
         id: bazel-testlogs
         run: |

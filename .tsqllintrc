@@ -1,0 +1,29 @@
+{
+    "rules": {
+        "conditional-begin-end": "error",
+        "cross-database-transaction": "error",
+        "data-compression": "error",
+        "data-type-length": "error",
+        "disallow-cursors": "error",
+        "full-text": "error",
+        "information-schema": "error",
+        "keyword-capitalization": "error",
+        "linked-server": "error",
+        "multi-table-alias": "error",
+        "named-constraint": "error",
+        "non-sargable": "error",
+        "object-property": "error",
+        "print-statement": "error",
+        "schema-qualify": "off",
+        "select-star": "error",
+        "semicolon-termination": "off",
+        "set-ansi": "off",
+        "set-nocount": "error",
+        "set-quoted-identifier": "off",
+        "set-transaction-isolation-level": "off",
+        "set-variable": "error",
+        "upper-lower": "error",
+        "unicode-string" : "error"
+    },
+    "compatability-level": 130
+}
