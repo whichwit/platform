@@ -1,7 +1,8 @@
+load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_binary")
+
 load("tools/create_or_alter_test.bzl", "create_or_alter_test")
 load("tools/ends_with_go_test.bzl", "ends_with_go_test")
 load("tools/parse_test.bzl", "parse_test")
-
 
 filegroup(
     name = "sqlscripts",
@@ -25,4 +26,10 @@ ends_with_go_test(
 parse_test(
     name = "parse_test",
     srcs = [":sqlscripts"],
+)
+
+nodejs_binary(
+    name = "deploy",    
+    # chdir = package_name()
+    entry_point = ":tools/deploy.js",
 )
