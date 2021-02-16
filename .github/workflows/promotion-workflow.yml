@@ -23,6 +23,7 @@ jobs:
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           signoff: true
           branch: prod-promotion
+          branch-suffix: short-commit-hash
           delete-branch: true
           title: '[Example] Update report'
           body: |
