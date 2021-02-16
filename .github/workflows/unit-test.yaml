@@ -15,7 +15,7 @@ jobs:
         image: mcr.microsoft.com/mssql/server
         env:
           ACCEPT_EULA: Y
-          SA_PASSWORD: Password1!
+          SA_PASSWORD: ${{ secrets.SA_PASSWORD }}
         ports:
           - 1433:1433
     steps:
@@ -34,7 +34,7 @@ jobs:
             ${{ runner.os }}-node-
       - run: npm ci
       - name: Execute unit test
-        run: bazelisk test //...
+        run: bazelisk test //... --test_env=SA_PASSWORD=${{ secrets.SA_PASSWORD }}
       - name: Get basel-testlogs path
         id: bazel-testlogs
         run: |

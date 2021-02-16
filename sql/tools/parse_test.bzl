@@ -9,7 +9,7 @@ def _check_file(f):
 echo Testing that {file} contains valid T-SQL scripts...
 echo "SET PARSEONLY ON;" > $TEST_TMPDIR/{name}
 cat {path} >> $TEST_TMPDIR/{name}
-sqlcmd -S localhost -U sa -P Password1! -i $TEST_TMPDIR/{name}
+sqlcmd -S localhost -U sa -P $SA_PASSWORD -i $TEST_TMPDIR/{name}
 """.format(path = f.path, file = f.short_path, name = f.basename)
 
 def _impl(ctx):
