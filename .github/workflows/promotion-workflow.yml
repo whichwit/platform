@@ -12,8 +12,8 @@ jobs:
           ref: main
       - name: Reset promotion branch
         run: |
-          git fetch origin test:test          
-          git reset --soft test
+          git fetch origin test:test --depth=1
+          git reset --hard test
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v3.8.2
