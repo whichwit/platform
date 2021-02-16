@@ -35,5 +35,5 @@ jobs:
           draft: true
       - name: Check outputs
         run: |
-          echo "Pull Request Numberd1 - ${{ steps.cpr.outputs.pull-request-number }}"
+          echo "Pull Request Numberd - ${{ steps.cpr.outputs.pull-request-number }}"
           echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
