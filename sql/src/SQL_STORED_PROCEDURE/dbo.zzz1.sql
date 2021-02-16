@@ -30,6 +30,8 @@ CREATE OR ALTER procedure dbo.zzz1
 as
 begin
 
+-- t
+
 select top 1 o.GUID,o.IDCode  --KAZ 610009 - add o.IDCode
 FROM CV3Order o (nolock)
  inner join CV3OrderCatalogMasterItem ocmi (nolock)
