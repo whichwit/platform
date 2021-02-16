@@ -41,4 +41,6 @@ jobs:
       #       ${{ runner.os }}-node-
       # - run: npm ci
       # - run: bazelisk run //sql:deploy
-      - uses: ./.github/actions/custom-action
+      - id: foo
+        uses: ./.github/actions/custom-action
+      - run: echo random-number ${{ steps.foo.outputs.random-number }}
