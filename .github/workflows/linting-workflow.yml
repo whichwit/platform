@@ -9,20 +9,20 @@ jobs:
   lint:
     runs-on: ubuntu-20.04
     steps:
-      - name: Check out repository code
-        uses: actions/checkout@v2
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-      - uses: actions/cache@v2
-        id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
-        with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - run: npm install tsqllint
+      # - name: Check out repository code
+      #   uses: actions/checkout@v2
+      # - name: Get npm cache directory
+      #   id: npm-cache-dir
+      #   run: |
+      #     echo "::set-output name=dir::$(npm config get cache)"
+      # - uses: actions/cache@v2
+      #   id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
+      #   with:
+      #     path: ${{ steps.npm-cache-dir.outputs.dir }}
+      #     key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-node-
+      # - run: npm install tsqllint
       - run: npm ci
       - name: Lint T-SQL
         run: npx tsqllint --config .tsqllintrc sql/src

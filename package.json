@@ -14,7 +14,8 @@
     "commitizen": "4.2.3",
     "cz-conventional-changelog": "3.3.0",
     "husky": "5.0.9",
-    "standard-version": "9.1.0"
+    "standard-version": "9.1.0",
+    "tsqllint": "1.11.0"
   },
   "standard-version": {
     "skip": {
