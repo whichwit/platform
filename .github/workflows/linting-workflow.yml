@@ -9,8 +9,8 @@ jobs:
   lint:
     runs-on: ubuntu-20.04
     steps:
-      # - name: Check out repository code
-      #   uses: actions/checkout@v2
+      - name: Check out repository code
+        uses: actions/checkout@v2
       # - name: Get npm cache directory
       #   id: npm-cache-dir
       #   run: |
