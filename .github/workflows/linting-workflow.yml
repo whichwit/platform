@@ -23,7 +23,10 @@ jobs:
       #     restore-keys: |
       #       ${{ runner.os }}-node-
       # - run: npm install tsqllint
-      - run: sudo npm i -g npm
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 15
+          check-latest: true
       - run: |
           node --version
           npm --version        
