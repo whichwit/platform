@@ -1,1 +1,1 @@
-npx --no-install commitlint
+npx commitlint -e
