@@ -1,5 +1,5 @@
 {
-  "version": "0.0.5",
+  "version": "0.0.6",
   "private": true,
   "scripts": {
     "release": "standard-version",
@@ -15,7 +15,18 @@
   },
   "standard-version": {
     "skip": {
-      "tag": true
-    }
+      "tag": true,
+      "commit": true
+    },
+    "bumpFiles": [
+      {
+        "filename": "VERSION",
+        "type": "plain-text"
+      },
+      {
+        "filename": "package.json",
+        "type": "json"
+      }
+    ]
   }
 }
