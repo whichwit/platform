@@ -3,6 +3,8 @@ on:
   push:
     branches: 
       - test
+    paths-ignore:
+      - '.github/workflows/**'
 jobs:
   create_promotion_pr:
     runs-on: ubuntu-20.04
