@@ -2,7 +2,8 @@
   "version": "0.0.4",
   "private": true,
   "scripts": {
-    "release": "standard-version"
+    "release": "standard-version",
+    "postinstall": "husky install"
   },
   "devDependencies": {
     "@bazel/bazelisk": "1.7.5",
