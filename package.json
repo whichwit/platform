@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "commit": "cz",
-    "postinstall": "npx husky install && npx commitizen init cz-conventional-changelog --save-dev --save-exact --force",
+    "ehrdevinit": "npx husky install && npx commitizen init cz-conventional-changelog --save-dev --save-exact",
     "release": "standard-version"
   },
   "devDependencies": {

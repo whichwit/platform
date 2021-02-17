@@ -5,5 +5,6 @@
 - ([Node.js](https://nodejs.org/en/)) (includes `npm` and `npx` )
 
 ## Install
-- `npm i -g commitizen @commitlint/cli`
-- `npm i`
+- Upgrade NPM: `npm i -g npm`
+- Install packages: `npm ci`
+- Initialize develop environment for EHR Dev: `npm run ehrdevsetup`
