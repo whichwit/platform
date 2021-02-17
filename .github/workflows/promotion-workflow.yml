@@ -22,6 +22,10 @@ jobs:
         run: |
           git fetch origin ${{ github.sha }}
           git cherry-pick --allow-empty --strategy=recursive --strategy-option=theirs ${{ github.sha }}
+      - name: Get commit message
+        id: commit-message
+        run: |
+          echo "::set-output name=subject::$(git log -1 --format=%s ${{ github.sha }})"
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v3.8.2
@@ -32,7 +36,7 @@ jobs:
           branch: ${{ env.PROMOTION_BRANCH }}
           branch-suffix: random
           delete-branch: true
-          title: ${{ github.event.head_commit.message }}
+          title: ${{ steps.commit-message.outputs.subject }}
           # body: |
             # Update report
             # - Updated with *today's* date
