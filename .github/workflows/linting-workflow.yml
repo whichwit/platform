@@ -23,9 +23,10 @@ jobs:
       #     restore-keys: |
       #       ${{ runner.os }}-node-
       # - run: npm install tsqllint
+      - run: sudo npm i -g npm
       - run: |
           node --version
-          npm --version
+          npm --version        
       - run: npm ci
       - name: Lint T-SQL
         run: npx tsqllint --config .tsqllintrc sql/src
