@@ -5,4 +5,5 @@
 - ([Node.js](https://nodejs.org/en/)) (includes `npm` and `npx` )
 
 ## Install
-`npm i`
+- `npm i -g commitizen @commitlint/cli`
+- `npm i`
