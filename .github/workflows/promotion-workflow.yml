@@ -22,11 +22,12 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v3.8.2
         with:
-          # committer: GitHub <noreply@github.com>
-          # author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          committer: ${{ github.event.head_commit.committer.name }} <${{ github.event.head_commit.committer.email }}>
+          author: ${{ github.event.head_commit.author.name }} <${{ github.event.head_commit.author.email }}>
           signoff: true
           branch: prod-promotion
           branch-suffix: random
+          delete-branch: true
           title: ${{ github.event.head_commit.message }}
           # body: |
             # Update report
