@@ -1,5 +1,8 @@
-# platform
+# Monorepo for EHR Development
 
-ab123av
+## Prerequisite
+- Git
+- Node.js[https://nodejs.org/en/] (includes `npm` and `npx` )
 
-# abcfff1b
+## Install
+`npm i`
