@@ -1,4 +1,4 @@
-name: Automatic promote
+name: Migration to production
 on:
   push:
     branches: 
@@ -6,9 +6,9 @@ on:
     paths-ignore:
       - '.github/workflows/**'
 env:
-  PROMOTION_BRANCH: promotion
+  PROMOTION_BRANCH: migrate
 jobs:
-  incremental_promotion:
+  incremental_migration:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
