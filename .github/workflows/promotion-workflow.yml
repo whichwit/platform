@@ -12,7 +12,7 @@ jobs:
           ref: main
       - name: Reset promotion branch
         run: |
-          git fetch origin test:test
+          git fetch origin test:test          
           git cherry-pick --allow-empty --strategy=recursive --strategy-option=theirs --no-commit ${{ github.sha }}
       - name: Create Pull Request
         id: cpr
