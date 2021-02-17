@@ -54,8 +54,8 @@ jobs:
           git config user.email "${{ github.event.head_commit.committer.email }}"
       - name: Reset promotion branch
         run: |
-          git fetch origin ${{ github.sha }}
-          git cherry-pick --allow-empty --strategy=recursive --strategy-option=theirs ${{ github.sha }}
+          git fetch origin test:test
+          git reset --hard test
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v3.8.2
