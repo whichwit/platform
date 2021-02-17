@@ -1,5 +1,6 @@
 {
   "version": "0.0.6",
+  "description": "Monorepo for EHR Development",
   "private": true,
   "scripts": {
     "release": "standard-version",
