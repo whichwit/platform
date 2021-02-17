@@ -7,5 +7,10 @@
     "@bazel/bazelisk": "1.7.5",
     "standard-version": "9.1.0",
     "tsqllint": "1.11.0"
+  },
+  "standard-version": {
+    "skip": {
+      "tag": true
+    }
   }
 }
