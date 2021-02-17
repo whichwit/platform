@@ -18,7 +18,7 @@ jobs:
           git config user.email "${{ github.event.head_commit.committer.email }}"
       - name: Reset promotion branch
         run: |
-          git fetch origin ${{ github.sha }}:${{ github.sha }}
+          git fetch origin ${{ github.sha }}
           git cherry-pick --allow-empty --strategy=recursive --strategy-option=theirs ${{ github.sha }}
       - name: Create Pull Request
         id: cpr
@@ -54,7 +54,7 @@ jobs:
           git config user.email "${{ github.event.head_commit.committer.email }}"
       - name: Reset promotion branch
         run: |
-          git fetch origin ${{ github.sha }}:${{ github.sha }}
+          git fetch origin ${{ github.sha }}
           git cherry-pick --allow-empty --strategy=recursive --strategy-option=theirs ${{ github.sha }}
       - name: Create Pull Request
         id: cpr
