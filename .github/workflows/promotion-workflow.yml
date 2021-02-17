@@ -27,7 +27,7 @@ jobs:
           signoff: true
           branch: prod-promotion
           branch-suffix: random
-          # title: '[Example] Update report ${{ github.sha }}'
+          title: ${{ github.event.head_commit.message }}
           # body: |
             # Update report
             # - Updated with *today's* date
