@@ -1,6 +1,11 @@
 {
+  "version": "0.0.1",
+  "scripts": {
+    "release": "standard-version"
+  },
   "devDependencies": {
     "@bazel/bazelisk": "1.7.5",
+    "standard-version": "9.1.0",
     "tsqllint": "1.11.0"
   }
 }
