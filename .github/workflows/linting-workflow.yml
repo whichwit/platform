@@ -6,7 +6,7 @@ on:
   # - pull_request
   - push
 jobs:
-  linting:
+  lint:
     runs-on: ubuntu-20.04
     steps:
       - name: Check out repository code
