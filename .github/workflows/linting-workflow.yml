@@ -22,9 +22,10 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
+      - run: npm install tsqllint -g
       - run: npm ci
       - name: Lint T-SQL
-        run: npx tsqllint --config .tsqllintrc sql/src
+        run: tsqllint --config .tsqllintrc sql/src
   playground:
     runs-on: ubuntu-20.04
     steps:

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "commit": "cz",
-    "postinstall": "npx husky install && commitizen init cz-conventional-changelog --save-dev --save-exact --force",
+    "postinstall": "npx husky install && npx commitizen init cz-conventional-changelog --save-dev --save-exact --force",
     "release": "standard-version"
   },
   "devDependencies": {
@@ -14,8 +14,7 @@
     "commitizen": "4.2.3",
     "cz-conventional-changelog": "3.3.0",
     "husky": "5.0.9",
-    "standard-version": "9.1.0",
-    "tsqllint": "1.11.0"
+    "standard-version": "9.1.0"
   },
   "standard-version": {
     "skip": {
