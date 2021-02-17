@@ -11,8 +11,8 @@ jobs:
         with:
           ref: main
       - name: Reset promotion branch
-        # git fetch origin test:test          
         run: |
+          git fetch origin ${{ github.sha }}:${{ github.sha }}          
           git cherry-pick --allow-empty --strategy=recursive --strategy-option=theirs --no-commit ${{ github.sha }}
         #git reset --soft test
       - name: Create Pull Request
