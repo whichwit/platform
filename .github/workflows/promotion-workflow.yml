@@ -14,13 +14,12 @@ jobs:
         run: |
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-          git fetch origin test:test
+          git fetch origin test:test --depth=1
           git cherry-pick --allow-empty --strategy=recursive --strategy-option=theirs ${{ github.sha }}
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v3.8.2
         with:
-          commit-message: Update report
           committer: GitHub <noreply@github.com>
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           signoff: true
