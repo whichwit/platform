@@ -13,7 +13,7 @@
     "@commitlint/config-conventional": "11.0.0",
     "commitizen": "4.2.3",
     "cz-conventional-changelog": "3.3.0",
-    "husky": "5.1.0",
+    "husky": "5.1.1",
     "standard-version": "9.1.1",
     "tsqllint": "1.11.0"
   },
