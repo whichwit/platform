@@ -28,7 +28,7 @@ jobs:
           echo "::set-output name=subject::$(git log -1 --format=%s ${{ github.sha }})"
       - name: Create Pull Request
         id: cpr
-        uses: peter-evans/create-pull-request@v3.8.2
+        uses: peter-evans/create-pull-request@v3.10.0
         with:
           committer: ${{ github.event.head_commit.committer.name }} <${{ github.event.head_commit.committer.email }}>
           author: ${{ github.event.head_commit.author.name }} <${{ github.event.head_commit.author.email }}>
